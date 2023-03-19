@@ -121,7 +121,7 @@ div#games-display{
     max-height: 10rem;
     box-shadow: 2px 2px 5px #222;
 
-    div.game-display-header{
+    h2.game-display-header{
       font-size: 1.5rem;
       font-weight: bolder;
       text-align: center;

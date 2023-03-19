@@ -198,11 +198,13 @@
       {#each filteredGames as game}
       <div class="game-display-card" aria-label="{game.name}" aria-describedby="{game.name}-description" transition:fly>
         <img alt="palceholder icon" src="images/icon.png" class="display-game-icon">
-        <div class="game-display-header">{game.name}</div>
-        <div class="launch-buttons">
-          <button on:click="{() => createGame(game.name)}" class="create-btn">Create</button>
-          <button on:click="{() => playGame(game.name)}" class="play-btn">Play</button>
-          <button on:click="{() => joinGame(game.name)}" class="join-btn">Join</button>
+        <div class="game-display-content">
+          <span class="game-display-header">{game.name}</span>
+          <div class="launch-buttons">
+            <button on:click="{() => createGame(game.name)}" class="create-btn">Create</button>
+            <button on:click="{() => playGame(game.name)}" class="play-btn">Play</button>
+            <button on:click="{() => joinGame(game.name)}" class="join-btn">Join</button>
+          </div>
         </div>
       </div>
       {/each}
@@ -276,13 +278,13 @@
     justify-content: center;
     margin: 3rem auto;
     min-height: 30rem;
-    width: clamp(18rem, 80%, 100%);
+    width: clamp(18rem, 90%, 100%);
   }
 
   img.display-game-icon{
     max-width: 5rem;
     max-height: 5rem;
-    margin: 0 auto;
+    margin: auto 0;
     display: inherit;
   }
 
@@ -291,7 +293,6 @@
     flex-direction: row;
     justify-content: center;
     gap: 0.45rem;
-    margin-top: auto;
   }
 
   div.launch-buttons button{
@@ -327,6 +328,7 @@
   }
 
   div.game-display-card{
+    display: flex;
     background-color: white;
     border: 1px solid black;
     border-radius: 10px;
@@ -335,10 +337,16 @@
     max-height: 10rem;
     box-shadow: 2px 2px 5px #222;
 
-    div.game-display-header{
+    div.game-display-content{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+    span.game-display-header{
       font-size: 1.5rem;
       font-weight: bolder;
       text-align: center;
+      padding-bottom: 0.5rem;
     }
   }
 </style>
