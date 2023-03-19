@@ -22,6 +22,8 @@ WORKDIR /home/runner
 
 COPY --from=builder /build ./freecards
 
+COPY server.js index.js
+
 ADD package.json package-lock.json /home/runner/freecards/
 
 RUN cd freecards && npm i

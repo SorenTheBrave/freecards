@@ -197,7 +197,7 @@
     <div id="results">
       {#each filteredGames as game}
       <div class="game-display-card" aria-label="{game.name}" aria-describedby="{game.name}-description" transition:fly>
-        <img alt="palceholder icon" src="icon.png" class="display-game-icon">
+        <img alt="palceholder icon" src="images/icon.png" class="display-game-icon">
         <div class="game-display-header">{game.name}</div>
         <div class="launch-buttons">
           <button on:click="{() => createGame(game.name)}" class="create-btn">Create</button>
