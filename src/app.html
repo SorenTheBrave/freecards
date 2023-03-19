@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		%sveltekit.head%
+    <link href="src/app.scss" rel="stylesheet" /> 
+	</head>
+	<body data-sveltekit-preload-data="hover">
+    <header>
+      <a id="home-link" href="/">
+        FreeCards
+      </a>
+      <span id="settings">[settings]</span>
+    </header>
+		<main role="main" style="display: contents">
+      %sveltekit.body%
+    </main>
+	</body>
+</html>
