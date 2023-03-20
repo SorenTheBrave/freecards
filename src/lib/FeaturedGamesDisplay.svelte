@@ -26,7 +26,7 @@
 <div id="games-display">
   {#each games as game}
     <div class="game-display-card hand-of-{games.length}" aria-label="{game.name}" aria-describedby="{game.name}-description"transition:fly>
-      <img alt="placeholder icon" src="images/icon.png" class="display-game-icon">
+      <img alt="placeholder icon" src="/images/icon.png" class="display-game-icon">
       <h2 class="game-display-header">{game.name}</h2>
       <p class="description {game.name}-description">{game.description}</p>
       <div class="game-display-footer">

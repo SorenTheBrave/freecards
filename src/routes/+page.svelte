@@ -197,7 +197,7 @@
     <div id="results">
       {#each filteredGames as game}
       <div class="game-display-card" aria-label="{game.name}" aria-describedby="{game.name}-description" transition:fly>
-        <img alt="palceholder icon" src="images/icon.png" class="display-game-icon">
+        <img alt="placeholder icon" src="/images/icon.png" class="display-game-icon">
         <div class="game-display-content">
           <span class="game-display-header">{game.name}</span>
           <div class="launch-buttons">
