@@ -201,9 +201,9 @@
         <div class="game-display-content">
           <span class="game-display-header">{game.name}</span>
           <div class="launch-buttons">
-            <button on:click="{() => createGame(game.name)}" class="create-btn">Create</button>
-            <button on:click="{() => playGame(game.name)}" class="play-btn">Play</button>
-            <button on:click="{() => joinGame(game.name)}" class="join-btn">Join</button>
+            <button on:click="{() => createGame(game.name)}" class="create-btn">CREATE</button>
+            <button on:click="{() => playGame(game.name)}" class="play-btn">PLAY</button>
+            <button on:click="{() => joinGame(game.name)}" class="join-btn">JOIN</button>
           </div>
         </div>
       </div>
@@ -218,11 +218,10 @@
   }
 
   h1{
-    margin-bottom: 0;
-    font-size: 3em;
+    display: none;
   }
 
-  h1,input{
+  input{
     text-align: center;
   }
 
@@ -234,6 +233,7 @@
     padding: 0.5rem;
     width: clamp(18rem, 80%, 100%);
     margin: 0 auto;
+    background-color: #F7F7FF;
 
     &:has(+ div#game-suggestions){
       border-radius: 10px 10px 0 0;
@@ -289,41 +289,40 @@
   }
 
   div.launch-buttons{
-    display: inline-flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: center;
     gap: 0.45rem;
   }
 
   div.launch-buttons button{
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     cursor: pointer;
     border: 2px solid black;
     border-radius: 5px;
   }
 
   button.create-btn{
-    background-color: hsl(108, 100%, 51%);
+    background-color: hsl(183, 81%, 48%);
 
     &:hover{
-      background-color: hsl(108, 100%, 45%);
+      background-color: hsl(183, 81%, 65%);
     }
   }
 
   button.play-btn{
-    background-color: hsl(288, 84%, 38%);
-    color: white;
+    background-color: hsl(44, 98%, 62%);
 
     &:hover{
-      background-color: hsl(288, 84%, 28%);
+      background-color: hsl(44, 98%, 75%);
     }
   }
 
   button.join-btn{
-    background-color: hsl(170, 100%, 57%);
+    background-color: hsl(345, 100%, 74%);
 
     &:hover{
-      background-color: hsl(170, 100%, 40%);
+      background-color: hsl(345, 100%, 85%);
     }
   }
 

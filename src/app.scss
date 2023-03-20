@@ -1,11 +1,11 @@
 
-$tag-single: red;
-$tag-multi: purple;
-$tag-trick: blue;
-$tag-social: grey;
-$tag-betting: green;
-$tag-solitaire: orange;
-$tag-deception: yellow;
+// $tag-single: red;
+// $tag-multi: purple;
+// $tag-trick: blue;
+// $tag-social: grey;
+// $tag-betting: green;
+// $tag-solitaire: orange;
+// $tag-deception: yellow;
 
 :global{
   body {
@@ -16,8 +16,7 @@ $tag-deception: yellow;
   header{
     display: inline-flex;
     width: 100%;
-    height: 2.5rem;
-    background-color: mediumseagreen;
+    height: 1.5rem;
     font-size: 22px;
     font-weight: 800;
   }

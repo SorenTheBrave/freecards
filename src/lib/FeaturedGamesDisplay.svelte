@@ -29,15 +29,17 @@
       <img alt="placeholder icon" src="images/icon.png" class="display-game-icon">
       <h2 class="game-display-header">{game.name}</h2>
       <p class="description {game.name}-description">{game.description}</p>
-      <div class="launch-buttons">
-        <button on:click="{() => createGame(game.name)}" class="create-btn">Create</button>
-        <button on:click="{() => playGame(game.name)}" class="play-btn">Play</button>
-        <button on:click="{() => joinGame(game.name)}" class="join-btn">Join</button>
-      </div>
       <div class="game-display-footer">
-        {#each game.tags as tag}
-          <span class="tag tag-{tag}">{tag}</span>
-        {/each}
+        <div class="launch-buttons">
+          <button on:click="{() => createGame(game.name)}" class="create-btn">CREATE</button>
+          <button on:click="{() => playGame(game.name)}" class="play-btn">PLAY</button>
+          <button on:click="{() => joinGame(game.name)}" class="join-btn">JOIN</button>
+        </div>
+        <div class="game-tags">
+          {#each game.tags as tag}
+            <span class="tag tag-{tag}">#{tag}</span>
+          {/each}
+        </div>
       </div>
     </div>
   {/each}
@@ -57,42 +59,41 @@ p.description{
 }
 
 div.launch-buttons{
-  display: inline-flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   justify-content: center;
   gap: 0.45rem;
   margin-top: auto;
 }
 
 div.launch-buttons button{
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   cursor: pointer;
   border: 2px solid black;
   border-radius: 5px;
 }
 
 button.create-btn{
-  background-color: hsl(108, 100%, 51%);
+  background-color: hsl(183, 81%, 48%);
 
   &:hover{
-    background-color: hsl(108, 100%, 45%);
+    background-color: hsl(183, 81%, 65%);
   }
 }
 
 button.play-btn{
-  background-color: hsl(288, 84%, 38%);
-  color: white;
+  background-color: hsl(44, 98%, 62%);
 
   &:hover{
-    background-color: hsl(288, 84%, 28%);
+    background-color: hsl(44, 98%, 75%);
   }
 }
 
 button.join-btn{
-  background-color: hsl(170, 100%, 57%);
+  background-color: hsl(345, 100%, 74%);
 
   &:hover{
-    background-color: hsl(170, 100%, 40%);
+    background-color: hsl(345, 100%, 85%);
   }
 }
 
@@ -112,7 +113,7 @@ div#games-display{
   div.game-display-card{
     aspect-ratio: 88 / 62;
     position: relative;
-    background-color: white;
+    background-color: #F7F7FF;
     border: 1px solid black;
     border-radius: 10px;
     margin: 0.25rem; 
@@ -129,48 +130,59 @@ div#games-display{
 
     div.game-display-footer{
       display: none;
+      margin: auto 0 1rem 0;
     }
+  }
+
+  div.game-tags{
+    max-width: 95%;
+    margin: 0.25rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    height: 2rem;
+    justify-content: center;
   }
 
   span.tag{
-    border: 2px solid black;
-    border-radius: 5px;
-    margin: 0 0.25rem;
-    padding: 0.2rem;
-    cursor: default;
-
-    &.tag-singleplayer{
-      color: white;
-      background-color: $tag-single;
-    }
-
-    &.tag-multiplayer{
-      color: white;
-      background-color: $tag-multi;
-    }
-
-    &.tag-trick{
-      color: white;
-      background-color: $tag-trick;
-    }
-
-    &.tag-solitaire{
-      background-color: $tag-solitaire;
-    }
-
-    &.tag-betting{
-      color: white;
-      background-color: $tag-betting;
-    }
-
-    &.tag-social{
-      background-color: $tag-social;
-    }
-
-    &.tag-deception{
-      background-color: $tag-deception;
-    }
+    font-style: italic;
+    color: #333;
+    padding: 0 0.25rem;
   }
+    
+  //   cursor: default;
+
+  //   &.tag-singleplayer{
+  //     color: white;
+  //     background-color: $tag-single;
+  //   }
+
+  //   &.tag-multiplayer{
+  //     color: white;
+  //     background-color: $tag-multi;
+  //   }
+
+  //   &.tag-trick{
+  //     color: white;
+  //     background-color: $tag-trick;
+  //   }
+
+  //   &.tag-solitaire{
+  //     background-color: $tag-solitaire;
+  //   }
+
+  //   &.tag-betting{
+  //     color: white;
+  //     background-color: $tag-betting;
+  //   }
+
+  //   &.tag-social{
+  //     background-color: $tag-social;
+  //   }
+
+  //   &.tag-deception{
+  //     background-color: $tag-deception;
+  //   }
+  // }
 
   // /*
   //   Transform rules to make cards look like they're fanned out as if   
@@ -311,7 +323,6 @@ div#games-display{
 
         & div.game-display-footer{
           display: block;
-          margin-top: 1rem;
         }
       }
 
