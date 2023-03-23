@@ -16,15 +16,17 @@ FROM node:18
 
 RUN groupadd runners && useradd -G runners runner
 
-RUN mkdir -p /home/runner
+RUN mkdir -p /home/runner/freecards/static
 
 WORKDIR /home/runner
 
-COPY --from=builder /build ./freecards
+COPY --from=builder /build freecards
 
-COPY server.js index.js
+COPY server.js freecards/index.js
 
-ADD package.json package-lock.json /home/runner/freecards/
+COPY package.json package-lock.json freecards/
+
+COPY static freecards/static
 
 RUN cd freecards && npm i
 

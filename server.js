@@ -8,7 +8,7 @@ app.get('/healthcheck', (req, res) => {
   res.end('ok');
 });
 
-app.use('images',express.static('images'));
+app.use(express.static('static'));
  
 // let SvelteKit handle everything else, including serving prerendered pages and static assets
 app.use(handler);

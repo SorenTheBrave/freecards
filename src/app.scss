@@ -13,22 +13,22 @@
     margin: 0 auto;
   }
   
-  header{
-    display: inline-flex;
-    width: 100%;
-    height: 1.5rem;
-    font-size: 22px;
-    font-weight: 800;
-  }
-  
-  header a#home-link{
+  nav a#home-link{
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
     padding: 0.5rem;
     text-decoration: none;
     color: black;
+    font-size: 1.5em;
+    font-weight: bold;
   }
   
-  header span#settings{
+  nav img#settings{
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
     margin: auto 0.5rem;
-    margin-left: auto;
+    width: 2.5rem;
   }
 }

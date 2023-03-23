@@ -8,13 +8,14 @@
     <link href="src/app.scss" rel="stylesheet" /> 
 	</head>
 	<body data-sveltekit-preload-data="hover">
-    <header>
+    <a style="visibility: hidden;" href="#main">skip to main content</a>
+    <nav role="navigation">
       <a id="home-link" href="/">
         FreeCards
       </a>
-      <span id="settings">[settings]</span>
-    </header>
-		<main role="main" style="display: contents">
+      <img id="settings" src="/images/settings.svg"></img>
+    </nav>
+		<main id="main" role="main" style="display: contents">
       %sveltekit.body%
     </main>
 	</body>

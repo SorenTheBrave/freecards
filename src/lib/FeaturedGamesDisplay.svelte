@@ -97,16 +97,17 @@ button.join-btn{
   }
 }
 
-@media screen  and (min-width: 600px){
+@media screen  and (min-width: 1100px){
   div#games-display{
     min-height: 30rem;
+    display: flex !important;
   }
 }
 
 div#games-display{
+  display: none;
   margin: 0 auto;
   padding-top: 2rem;
-  display: flex;
   justify-content: center;
   flex-wrap: wrap;
 
@@ -214,7 +215,7 @@ div#games-display{
       aspect-ratio: 62 / 88;
       width: 250px;
       flex-direction: column;
-      max-height: 23rem;
+      max-height: 22rem;
       display: inline-flex;
 
       & p.description{
@@ -251,7 +252,7 @@ div#games-display{
         aspect-ratio: 62 / 88;
         width: 250px;
         flex-direction: column;
-        max-height: 23rem;
+        max-height: 22rem;
         display: inline-flex;
       }
 
@@ -282,7 +283,7 @@ div#games-display{
         aspect-ratio: 62 / 88;  
         width: 250px;
         flex-direction: column;
-        max-height: 23rem;
+        max-height: 22rem;
         display: inline-flex;
       }
 
@@ -313,7 +314,7 @@ div#games-display{
         aspect-ratio: 62 / 88;
         width: 250px;
         flex-direction: column;
-        max-height: 23rem;
+        max-height: 22rem;
         display: inline-flex;
 
         & p.description{
@@ -353,7 +354,7 @@ div#games-display{
         aspect-ratio: 62 / 88;
         width: 250px;
         flex-direction: column;
-        max-height: 23rem;
+        max-height: 22rem;
         display: inline-flex;
       }
 
@@ -381,7 +382,7 @@ div#games-display{
       aspect-ratio: 62 / 88;
       width: 250px;
       flex-direction: column;
-      max-height: 23rem;
+      max-height: 22rem;
       display: inline-flex;
     }
 

@@ -1,6 +1,7 @@
 <script lang=ts>
   import FeaturedGames from "../lib/FeaturedGamesDisplay.svelte";
-  import { fly } from 'svelte/transition';
+  import { fade } from 'svelte/transition';
+	import { each } from "svelte/internal";
 
   type GameSelection = {
     name: string,
@@ -195,8 +196,8 @@
       </div>
     {/if}
     <div id="results">
-      {#each filteredGames as game}
-      <div class="game-display-card" aria-label="{game.name}" aria-describedby="{game.name}-description" transition:fly>
+      {#each filteredGames as game (game.name)}
+      <div class="game-display-card" aria-label="{game.name}" aria-describedby="{game.name}-description" transition:fade={{duration:100}}>
         <img alt="placeholder icon" src="/images/icon.png" class="display-game-icon">
         <div class="game-display-content">
           <span class="game-display-header">{game.name}</span>
@@ -204,6 +205,11 @@
             <button on:click="{() => createGame(game.name)}" class="create-btn">CREATE</button>
             <button on:click="{() => playGame(game.name)}" class="play-btn">PLAY</button>
             <button on:click="{() => joinGame(game.name)}" class="join-btn">JOIN</button>
+          </div>
+          <div class="game-tags">
+            {#each game.tags as tag} 
+              <span class="tag tag-{tag}">#{tag}</span>
+            {/each}
           </div>
         </div>
       </div>
@@ -213,6 +219,21 @@
 </div>
 
 <style lang="scss">
+
+div.game-tags{
+  max-width: 95%;
+  margin: 0.25rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+span.tag{
+  font-style: italic;
+  color: #333;
+  padding: 0 0.25rem;
+}
+
   *{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
@@ -223,6 +244,12 @@
 
   input{
     text-align: center;
+  }
+
+  @media screen and (max-width: 1100px) {
+    input#game-search{
+      margin-top: 5rem !important;
+    }
   }
 
   input#game-search{
