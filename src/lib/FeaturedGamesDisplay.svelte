@@ -1,5 +1,6 @@
 <script lang=ts>
   import {fly} from 'svelte/transition';
+  import Favorite from './Favorite.svelte';
 
   // default to something embarassing just for now
   export let games = [{
@@ -24,8 +25,9 @@
 </script>
 
 <div id="games-display">
-  {#each games as game}
+  {#each games as game, index}
     <div class="game-display-card hand-of-{games.length}" aria-label="{game.name}" aria-describedby="{game.name}-description"transition:fly>
+      <Favorite checked="false" {index}></Favorite>
       <img alt="placeholder icon" src="/images/icon.png" class="display-game-icon">
       <h2 class="game-display-header">{game.name}</h2>
       <p class="description {game.name}-description">{game.description}</p>

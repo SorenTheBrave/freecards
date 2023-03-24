@@ -1,7 +1,6 @@
 <script lang=ts>
   import FeaturedGames from "../lib/FeaturedGamesDisplay.svelte";
   import { fade } from 'svelte/transition';
-	import { each } from "svelte/internal";
 
   type GameSelection = {
     name: string,
