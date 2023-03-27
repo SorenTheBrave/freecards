@@ -36,4 +36,4 @@ EXPOSE 443
 
 USER runner
 
-CMD [ "node","freecards" ]
+ENTRYPOINT [ "node","freecards" ]

@@ -1,44 +1,56 @@
 <script lang=ts>
   import FeaturedGames from "../lib/FeaturedGamesDisplay.svelte";
-  import { fade } from 'svelte/transition';
+  import { fade } from "svelte/transition";
+	import { writable, type Writable } from "svelte/store";
+  import { browser } from "$app/environment";
+  import type { GameDisplay } from "../types/types";
+	import Favorite from "$lib/Favorite.svelte";
+  const existingFavorites = browser ? localStorage?.getItem('favorites') || "" : "";
+  export const favorites: Writable<string[]> = writable(existingFavorites?.split(';') || []);
+  // export const ssr = false;
+  export const prerender = false;
 
-  type GameSelection = {
-    name: string,
-    type: string,
-    description: string,
-    tags: string[],
-    favorited?: boolean,
-  }
+  favorites.subscribe((value)=> {
+    if(browser){
+      value = value.filter((g)=>g.length)
+      localStorage.setItem('favorites',(value||[]).join(';'));
+    }
+  });
 
     // TODO: stub for now, but eventually fetch the 5 featured games (or player favorites) from API
-  function getFeaturedGames(): GameSelection[]{
+  function getFeaturedGames(): GameDisplay[]{
     return [
       {
         name: 'Hearts',
+        code: 'hearts',
         type: 'trick-based',
         tags: ['trick','multiplayer'],
         description: 'A golf-scoring type trick game where the goal is to get your opponents to take all of your heart cards (each 1 point)! Watch out, the queen of spades is worth 13 points!'
       },
       {
         name: 'Klondike Solitaire',
+        code: 'klondike',
         type: 'solitaire',
         tags: ['solitaire','singleplayer'],
         description: 'The classic solitaire experience. Empty your deck by layering all your cards of descending value and opposite color to win!'
       },
       {
         name: 'Nertz',
+        code: 'nertz',
         type: 'solitaire',
         tags: ['solitaire','multiplayer'],
         description: 'A competitive and speedy game where each player deals their own game of Klondike solitaire, but you all share all the aces! Who will be first to clear their deck...?'
       },
       {
         name: 'Poker',
+        code: 'poker',
         type: 'betting',
         tags: ['betting','multiplayer'],
         description: 'A betting game where players buy in, raise stakes, and more cards are revealed as rounds progress. For each hand, winner takes the pot.'
       },
       {
         name: 'Skull',
+        code: 'skull',
         type: 'deception',
         tags: ['deception','multiplayer','social'],
         description: 'Bluff your way to victory in this social deception game.'
@@ -68,70 +80,74 @@
     }
   };
 
-  // stub for now, but eventually check cookies for saved games and update them as users
-  // star cards on this page
-  function getFavoriteGames(): GameSelection[] {
-    return [];
-  }
-
-  function getAllGames(): GameSelection[] {
+  function getAllGames(): GameDisplay[] {
     return [
       {
         name: 'Hearts',
+        code: 'hearts',
         type: 'trick-based',
         tags: ['trick','multiplayer'],
         description: 'A golf-scoring type trick game where the goal is to get your opponents to take all of your heart cards (each 1 point)! Watch out, the queen of spades is worth 13 points!'
       },
       {
         name: 'Spades',
+        code: 'spades',
         type: 'trick-based',
         tags: ['trick','multiplayer'],
         description: 'A golf-scoring type trick game where you bet how many tricks you will win, and the goal is to win as close to as many trick as the bet.'
       },
       {
         name: 'Klondike Solitaire',
+        code: 'klondike',
         type: 'solitaire',
         tags: ['solitaire','singleplayer'],
         description: 'The classic solitaire experience. Empty your deck by layering all your cards of descending value and opposite color to win!'
       },
       {
         name: 'Nertz',
+        code: 'nertz',
         type: 'solitaire',
         tags: ['solitaire','multiplayer'],
         description: 'A competitive and speedy game where each player deals their own game of Klondike solitaire, but you all share all the aces! Who will be first to clear their deck...?'
       },
       {
         name: 'Poker',
+        code: 'poker',
         type: 'betting',
         tags: ['betting','multiplayer'],
         description: 'A betting game where players buy in, raise stakes, and more cards are revealed as rounds progress. For each hand, winner takes the pot.'
       },
       {
         name: 'Texas Hold \'em',
+        code: 'texasholdem',
         type: 'betting',
         tags: ['betting','multiplayer'],
         description: 'A betting game where players buy in, raise stakes, and more cards are revealed as rounds progress. For each hand, winner takes the pot.'
       },
       {
         name: 'Euchre',
+        code: 'euchre',
         type: 'trick',
         tags: ['trick','multiplayer'],
         description: 'A 2v2 trick taking game where trump suit is chosen each round. Win all 5 tricks or "go solo" to win extra points!'
       },
       {
         name: 'Skull',
+        code: 'skull',
         type: 'deception',
         tags: ['deception','multiplayer','social'],
         description: 'Bluff your way to victory in this social deception game.'
       },
       {
         name: 'Blackjack',
+        code: 'blackjack',
         type: 'betting',
         tags: ['betting','multiplayer'],
         description: 'Score as close to 21 as possible without going over. Aces high or low.'
       },
       {
         name: 'Rummy',
+        code: 'ginrummy',
         type: 'highscoring',
         tags: ['multiplayer',],
         description: 'Take turns drawing cards. Build pairs or runs to get the highest scoring hand!'
@@ -151,23 +167,35 @@
     console.log("Join game ",name,"!");
   }
 
-  const games = getFeaturedGames();
-  const favorites = getFavoriteGames();
-  const allGames = getAllGames();
+  const featuredGames = getFeaturedGames().map((g)=> {
+    return {
+    ...g,
+    favorited: existingFavorites?.includes(g.code)
+    }
+  });
+  const allGames = getAllGames().map((g)=> {
+    return {
+    ...g,
+    favorited: existingFavorites?.includes(g.code)
+    }
+  });
 
-  $: searchParam = "";
+  let favoriteGames: GameDisplay[] = [];
+  let searchParam = "";
+  console.log(existingFavorites);
   $: filteredGames = allGames.filter((game) => game.name.toLowerCase().includes(searchParam.toLowerCase()));
   $: filteredGameNames = filteredGames.length === allGames.length ? [] : filteredGames.map((game) => game.name);
   $: displaysuggestions = filteredGameNames.length > 0;
+  $: favoriteGames = allGames.filter((game)=>game.favorited);
 </script>
 <div id="single-column">
   <section>
-    {#if favorites.length}
+    {#if favoriteGames?.length}
       <h1>Favorite Games</h1>
-      <FeaturedGames games={favorites}></FeaturedGames>
-    {:else}
+      <FeaturedGames games={favoriteGames}/>
+    {:else if existingFavorites.length < 2 && featuredGames.length}
       <h1>Featured Games</h1>
-      <FeaturedGames {games}></FeaturedGames>
+      <FeaturedGames games={featuredGames}/>
     {/if}
   </section>
   <section id="browse">
@@ -199,7 +227,10 @@
       <div class="game-display-card" aria-label="{game.name}" aria-describedby="{game.name}-description" transition:fade={{duration:100}}>
         <img alt="placeholder icon" src="/images/icon.png" class="display-game-icon">
         <div class="game-display-content">
-          <span class="game-display-header">{game.name}</span>
+          <div class="result-header">
+            <span class="game-display-header">{game.name}</span>
+            <Favorite checked={game.favorited} game={game.code} id="result-{game.code}"/>
+          </div>
           <div class="launch-buttons">
             <button on:click="{() => createGame(game.name)}" class="create-btn">CREATE</button>
             <button on:click="{() => playGame(game.name)}" class="play-btn">PLAY</button>
@@ -218,6 +249,11 @@
 </div>
 
 <style lang="scss">
+
+div.result-header{
+  display: flex;
+  justify-content: space-between;
+}
 
 div.game-tags{
   max-width: 95%;
@@ -366,12 +402,14 @@ span.tag{
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-    }
-    span.game-display-header{
-      font-size: 1.5rem;
-      font-weight: bolder;
-      text-align: center;
-      padding-bottom: 0.5rem;
+
+      div.result-header span.game-display-header{
+        font-size: 1.5rem;
+        font-weight: bolder;
+        text-align: center;
+        padding-bottom: 0.5rem;
+        flex-grow: 1;
+      }
     }
   }
 </style>

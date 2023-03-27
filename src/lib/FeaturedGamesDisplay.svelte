@@ -1,10 +1,14 @@
 <script lang=ts>
-  import {fly} from 'svelte/transition';
+  import {slide} from 'svelte/transition';
+	import type { GameDisplay } from '../types/types';
   import Favorite from './Favorite.svelte';
+  export const intro = true;
 
   // default to something embarassing just for now
-  export let games = [{
+  export let games: GameDisplay[] = [{
       name: 'Awkward',
+      code: 'awko',
+      favorited: false,
       type: 'nope',
       tags: ['oops','siolly','coder'],
       description: 'Well this isn\'t quite right...'
@@ -26,8 +30,8 @@
 
 <div id="games-display">
   {#each games as game, index}
-    <div class="game-display-card hand-of-{games.length}" aria-label="{game.name}" aria-describedby="{game.name}-description"transition:fly>
-      <Favorite checked="false" {index}></Favorite>
+    <div class="game-display-card hand-of-{games.length}" aria-label="{game.name}" aria-describedby="{game.name}-description" transition:slide>
+      <div class="favorite"><Favorite checked="{game.favorited}" game={game.code} id="featured-{index}"></Favorite></div>
       <img alt="placeholder icon" src="/images/icon.png" class="display-game-icon">
       <h2 class="game-display-header">{game.name}</h2>
       <p class="description {game.name}-description">{game.description}</p>
@@ -125,6 +129,11 @@ div#games-display{
     max-height: 10rem;
     box-shadow: 2px 2px 5px #222;
 
+    div.favorite{
+      position: absolute;
+      right: 0.25rem;
+    }
+
     h2.game-display-header{
       font-size: 1.5rem;
       font-weight: bolder;
@@ -205,6 +214,10 @@ div#games-display{
   // try the formulas out yourself by hand to see how this works! it was fun to figure out
 
   // .hand-of-1 - no static effect, the card is already centered. just move up on hover 
+  :where(&) .game-display-card.hand-of-1 {
+    transition: all 0.1s linear;
+  }
+  
   :where(&) .game-display-card.hand-of-1:hover,
   :where(&) .game-display-card.hand-of-1:focus-within {
     transition: all 0.1s linear;
@@ -212,6 +225,25 @@ div#games-display{
   }
 
   @media screen  and (min-width: 600px){
+
+    .game-display-card.hand-of-1{
+      position: absolute;
+      aspect-ratio: 62 / 88;
+      width: 250px;
+      flex-direction: column;
+      max-height: 22rem;
+      display: inline-flex;
+
+      & p.description{
+        display: block;
+        text-align: center;
+      }
+
+      & div.game-display-footer{
+        display: block;
+      }
+    }
+
     .game-display-card.hand-of-2 {
       position: absolute;
       aspect-ratio: 62 / 88;
@@ -223,6 +255,10 @@ div#games-display{
       & p.description{
         display: block;
         text-align: center;
+      }
+
+      & div.game-display-footer{
+        display: block;
       }
     }
     // .hand-of-2 - no vertical offset
@@ -256,6 +292,15 @@ div#games-display{
         flex-direction: column;
         max-height: 22rem;
         display: inline-flex;
+        
+        & p.description{
+          display: block;
+          text-align: center;
+        }
+
+        & div.game-display-footer{
+          display: block;
+        }
       }
 
       :where(&) .game-display-card:nth-child(#{$i}).hand-of-3 {
@@ -287,6 +332,15 @@ div#games-display{
         flex-direction: column;
         max-height: 22rem;
         display: inline-flex;
+
+        & p.description{
+          display: block;
+          text-align: center;
+        }
+
+        & div.game-display-footer{
+          display: block;
+        }
       }
 
       :where(&) .game-display-card:nth-child(#{$i}).hand-of-4 {
