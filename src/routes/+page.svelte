@@ -313,11 +313,10 @@ span.tag{
 
   section#browse{
     display: grid;
-    margin: 2rem;
+    margin: 2rem 0;
   }
   
   div#single-column{
-    max-width: 85%;
     margin: -2.5rem auto 0;
   }
 

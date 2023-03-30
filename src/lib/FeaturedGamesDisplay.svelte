@@ -412,6 +412,15 @@ div#games-display{
         flex-direction: column;
         max-height: 22rem;
         display: inline-flex;
+        
+        & p.description{
+          display: block;
+          text-align: center;
+        }
+
+        & div.game-display-footer{
+          display: block;
+        }
       }
 
       :where(&) .game-display-card:nth-child(#{$i}).hand-of-6 {
@@ -440,6 +449,15 @@ div#games-display{
       flex-direction: column;
       max-height: 22rem;
       display: inline-flex;
+
+      & p.description{
+        display: block;
+        text-align: center;
+      }
+
+      & div.game-display-footer{
+        display: block;
+      }
     }
 
     @for $i from 1 through 7 {
