@@ -25,6 +25,10 @@ pnpm i --save-dev vite
 vite dev
 ```
 
+You should probably install the 'Svelte for VS Code' extension if you
+are using that IDE and make sure VS Code is up to date. If you get weird
+errors (like on `<script>` tags), make sure the IDE itself is current.
+
 ## Building
 
 To create a prodlike version of the app:
