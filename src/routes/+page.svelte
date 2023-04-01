@@ -7,8 +7,6 @@
 	import Favorite from '$lib/Favorite.svelte';
 	const existingFavorites = browser ? localStorage?.getItem('favorites') || '' : '';
 	export const favorites: Writable<string[]> = writable(existingFavorites?.split(';') || []);
-	// export const ssr = false;
-	export const prerender = false;
 
 	favorites.subscribe((value) => {
 		if (browser) {
@@ -61,30 +59,6 @@
 			}
 		];
 	}
-
-	/*
-      Functions for managing selected item in the typeahead
-  */
-
-	let selectedSuggestion = 0;
-
-	const resetSuggestion = (e: Event | undefined): void => {
-		selectedSuggestion = 0;
-	};
-	const suggestionKeyNav = (e: KeyboardEvent): void => {
-		switch (e.key) {
-			case 'ArrowDown':
-				e.preventDefault();
-				selectedSuggestion++;
-				return;
-			case 'ArrowUp':
-				e.preventDefault();
-				selectedSuggestion--;
-				return;
-			default:
-				return;
-		}
-	};
 
 	function getAllGames(): GameDisplay[] {
 		return [
@@ -194,15 +168,67 @@
 		};
 	});
 
+  // Track state in the typeahead. -1 = no suggestion selected, >= 0 is selected's position
+  let focusedSuggestion = -1;
+  const captureKeys = ["ArrowUp","ArrowDown","Enter"];
+  const inputKeyPress = (e: KeyboardEvent) => {
+    if(searchParam.trim()=='') {
+      resetSuggestion();
+      return;
+    }
+    if(captureKeys.includes(e.key)){
+      e.preventDefault();
+      e.stopPropagation();
+      switch(e.key){
+        case "ArrowUp":
+          if(focusedSuggestion <= 0) {
+            focusedSuggestion = filteredGames.length-1;
+            wrapSuggestion({top:10000000});
+          } else {
+            focusedSuggestion--;
+            viewSuggestion({block:"end"});
+          }
+          console.log("scroll up");
+          break;
+        case "ArrowDown":
+          if(focusedSuggestion == filteredGames.length-1) {
+            focusedSuggestion = 0;
+            wrapSuggestion({top: 0});
+          }else{
+            focusedSuggestion++;
+            viewSuggestion({block:"start"});
+          }
+          break;
+        case "Enter":
+          searchParam = filteredGameNames[focusedSuggestion];
+          break;
+        default:
+      }
+      console.log(focusedSuggestion);
+    }
+  }
+
+  const wrapSuggestion = (containerOptions:ScrollToOptions) => {
+    console.dir(containerOptions);
+    const elem = document.querySelector("div#game-suggestions");
+    elem?.scroll(containerOptions);
+    return;
+  }
+
+  const viewSuggestion = (containerOptions?:ScrollIntoViewOptions) => {
+    const elem = document.querySelector("div#game-suggestions div[aria-selected=true]")
+    console.log(elem);
+    elem?.scrollIntoView(containerOptions);
+  }
+  const resetSuggestion = () => { focusedSuggestion = -1; }
+
 	let favoriteGames: GameDisplay[] = [];
 	let searchParam = '';
-	console.log(existingFavorites);
-	$: filteredGames = allGames.filter((game) =>
+	$: filteredGames = searchParam.trim().length ? allGames.filter((game) =>
 		game.name.toLowerCase().includes(searchParam.toLowerCase())
-	);
-	$: filteredGameNames =
-		filteredGames.length === allGames.length ? [] : filteredGames.map((game) => game.name);
-	$: displaysuggestions = filteredGameNames.length > 0;
+	) : allGames;
+	$: filteredGameNames = filteredGames.map((game) => game.name);
+	$: displaysuggestions = filteredGames.length < allGames.length;
 	$: favoriteGames = allGames.filter((game) => game.favorited);
 </script>
 
@@ -231,17 +257,18 @@
 			aria-autocomplete="list"
 			placeholder="🔎 Search games"
 			on:blur={resetSuggestion}
-			on:keypress={suggestionKeyNav}
+			on:keydown={inputKeyPress}
 			bind:value={searchParam}
 		/>
 		{#if displaysuggestions}
 			<div id="game-suggestions" role="listbox">
 				{#each filteredGameNames as suggestion, index}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
 						on:click={() => (searchParam = suggestion)}
 						id="suggestion-{suggestion}"
 						role="option"
-						aria-selected={index == selectedSuggestion}
+						aria-selected={index == focusedSuggestion}
 						class="search-result"
 					>
 						{suggestion}
@@ -281,6 +308,17 @@
 </div>
 
 <style lang="scss">
+
+  div#game-suggestions,
+  div.search-result{
+    overscroll-behavior-y: none;
+  }
+
+  div.search-result[aria-selected=true]{
+    background-color: peachpuff;
+    scroll-padding-top: 5rem;
+  }
+
 	div.result-header {
 		display: flex;
 		justify-content: space-between;
