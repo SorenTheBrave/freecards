@@ -307,8 +307,8 @@
 					<img alt="placeholder icon" src="/images/icon.png" class="display-game-icon" />
 					<div class="game-display-content">
 						<div class="result-header">
+							<Favorite checked={game.favorited} game={game.code} id="result-{game.code}" --scale="0.7"/>
 							<span class="game-display-header">{game.name}</span>
-							<Favorite checked={game.favorited} game={game.code} id="result-{game.code}" />
 						</div>
 						<div class="launch-buttons">
 							<button on:click={() => createGame(game.name)} class="create-btn">CREATE</button>
@@ -343,11 +343,6 @@
     background-color: peachpuff;
     scroll-padding-top: 5rem;
   }
-
-	div.result-header {
-		display: flex;
-		justify-content: space-between;
-	}
 
 	div.game-tags {
 		max-width: 95%;
@@ -494,6 +489,7 @@
 		margin: 0.25rem;
 		padding: 0.75rem;
 		max-height: 10rem;
+    max-width: 19.5rem;
 		box-shadow: 2px 2px 5px #222;
 
 		div.game-display-content {
@@ -501,13 +497,18 @@
 			flex-direction: column;
 			justify-content: space-around;
 
-			div.result-header span.game-display-header {
-				font-size: 1.5rem;
-				font-weight: bolder;
-				text-align: center;
-				padding-bottom: 0.5rem;
-				flex-grow: 1;
-			}
+			div.result-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span.game-display-header {
+          font-size: 1.75rem;
+          font-weight: bolder;
+          flex-grow: 0.5;
+          padding-bottom: 0.25rem;
+			  }
+      }
 		}
 	}
 </style>

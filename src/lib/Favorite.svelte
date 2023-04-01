@@ -39,13 +39,14 @@
 		cursor: pointer;
 	}
 	div.favorite input[type='checkbox']:focus + label::before {
-		outline: 2px solid rgba(128, 212, 255, 80%);
 		border-radius: 2px;
 	}
 	div.favorite input[type='checkbox'] + label::before {
 		content: url('/images/star_outline.svg');
+    transform: scale(var(--scale));
 	}
 	div.favorite input[type='checkbox']:checked + label::before {
 		content: url('/images/star_filled.svg');
+    transform: scale(var(--scale));
 	}
 </style>

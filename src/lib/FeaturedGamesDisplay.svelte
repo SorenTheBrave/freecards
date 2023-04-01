@@ -40,7 +40,7 @@
 			transition:slide
 		>
 			<div class="favorite">
-				<Favorite checked={game.favorited} game={game.code} id="featured-{index}" />
+				<Favorite checked={game.favorited} game={game.code} id="featured-{index}" --scale="1.0"/>
 			</div>
 			<img alt="placeholder icon" src="/images/icon.png" class="display-game-icon" />
 			<h2 class="game-display-header">{game.name}</h2>
