@@ -222,11 +222,31 @@
   }
   const resetSuggestion = () => { focusedSuggestion = -1; }
 
+  const addTagToSearch = (tag: string): void => {
+    if(searchParam.includes(tag)) return;
+    searchParam = (searchParam.trim() + ` #${tag}`).trim();
+  }
+
+  const filterSearchResults = (search: string): GameDisplay[] => {
+    if(search.replaceAll('#','').trim().length < 1) return allGames;
+    const tagsInSearch = Array.from(searchParam.matchAll(/(#[a-zA-Z]+)/g), (m) => m[0]);
+    if(tagsInSearch == null ||  tagsInSearch?.length == 0) {
+      return allGames.filter((game) =>
+		    game.name.toLowerCase().includes(searchParam.toLowerCase())
+      )
+    }
+    const searchGameName = search.substring(0,search.indexOf('#')).trim().toLowerCase();
+    console.log("Term: ",searchGameName);
+    console.log("Tags: [",tagsInSearch.join(","),"]");
+    return allGames.filter((game) =>
+      game.name.toLowerCase().includes(searchGameName) &&
+      tagsInSearch?.every((tag) => game.tags.some((gametag)=>gametag.startsWith(tag.substring(1))))
+    );
+  }
+
 	let favoriteGames: GameDisplay[] = [];
 	let searchParam = '';
-	$: filteredGames = searchParam.trim().length ? allGames.filter((game) =>
-		game.name.toLowerCase().includes(searchParam.toLowerCase())
-	) : allGames;
+	$: filteredGames = filterSearchResults(searchParam).sort((a,b) => a.name >= b.name ? 1 : -1);
 	$: filteredGameNames = filteredGames.map((game) => game.name);
 	$: displaysuggestions = filteredGames.length < allGames.length;
 	$: favoriteGames = allGames.filter((game) => game.favorited);
@@ -236,10 +256,10 @@
 	<section>
 		{#if favoriteGames?.length}
 			<h1>Favorite Games</h1>
-			<FeaturedGames games={favoriteGames} />
+			<FeaturedGames games={favoriteGames} selectTag={addTagToSearch}/>
 		{:else if existingFavorites.length < 2 && featuredGames.length}
 			<h1>Featured Games</h1>
-			<FeaturedGames games={featuredGames} />
+			<FeaturedGames games={featuredGames} selectTag={addTagToSearch}/>
 		{/if}
 	</section>
 	<section id="browse">
@@ -297,7 +317,12 @@
 						</div>
 						<div class="game-tags">
 							{#each game.tags as tag}
-								<span class="tag tag-{tag}">#{tag}</span>
+                <a 
+                  href="#results"
+                  on:click={(_e) => addTagToSearch(tag)}
+                  on:keydown={(e)=>["Space","Enter"].includes(e.key) ? addTagToSearch(tag) : false}
+                  class="tag tag-{tag}">#{tag}
+                </a>
 							{/each}
 						</div>
 					</div>
@@ -332,10 +357,15 @@
 		justify-content: center;
 	}
 
-	span.tag {
+	a.tag {
 		font-style: italic;
 		color: #333;
 		padding: 0 0.25rem;
+    text-decoration: none;
+
+    &:hover {
+      color: rgb(140, 180, 255);
+    }
 	}
 
 	* {

@@ -16,6 +16,8 @@
 		}
 	];
 
+  export let selectTag: (tag: string) => void;
+
 	const createGame = (name: string) => {
 		console.log('Created game ', name, '!');
 	};
@@ -51,7 +53,12 @@
 				</div>
 				<div class="game-tags">
 					{#each game.tags as tag}
-						<span class="tag tag-{tag}">#{tag}</span>
+						<a 
+              href="#results"
+              on:click={(_e) => selectTag(tag)}
+              on:keydown={(e)=>["Space","Enter"].includes(e.key) ? selectTag(tag) : false}
+              class="tag tag-{tag}">#{tag}
+            </a>
 					{/each}
 				</div>
 			</div>
@@ -162,10 +169,15 @@
 			justify-content: center;
 		}
 
-		span.tag {
+		a.tag {
 			font-style: italic;
 			color: #333;
 			padding: 0 0.25rem;
+      text-decoration: none;
+
+      &:hover {
+        color: rgb(140, 180, 255);
+      }
 		}
 
 		//   cursor: default;
