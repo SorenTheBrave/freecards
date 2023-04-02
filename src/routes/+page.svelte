@@ -204,8 +204,11 @@
 
   const viewSuggestion = (suggestion: number) => {
     const container = document.querySelector("div#game-suggestions");
+    const elem = document.querySelector("div#game-suggestions div.search-result[aria-selected=true]");
+    if(!elem) return;
+    console.log(suggestion *  elem.clientHeight);
     container?.scroll({
-      top: (suggestion / filteredGames.length) * 150
+      top: suggestion * elem.clientHeight
     });
   }
   const resetSuggestion = () => { focusedSuggestion = -1; }
