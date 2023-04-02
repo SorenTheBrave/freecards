@@ -178,25 +178,19 @@
     }
     if(captureKeys.includes(e.key)){
       e.preventDefault();
-      e.stopPropagation();
       switch(e.key){
         case "ArrowUp":
           if(focusedSuggestion <= 0) {
             focusedSuggestion = filteredGames.length-1;
-            wrapSuggestion({top:10000000});
           } else {
             focusedSuggestion--;
-            viewSuggestion({block:"end"});
           }
-          console.log("scroll up");
           break;
         case "ArrowDown":
           if(focusedSuggestion == filteredGames.length-1) {
             focusedSuggestion = 0;
-            wrapSuggestion({top: 0});
           }else{
             focusedSuggestion++;
-            viewSuggestion({block:"start"});
           }
           break;
         case "Enter":
@@ -204,21 +198,15 @@
           break;
         default:
       }
-      console.log(focusedSuggestion);
+      viewSuggestion(focusedSuggestion);
     }
   }
 
-  const wrapSuggestion = (containerOptions:ScrollToOptions) => {
-    console.dir(containerOptions);
-    const elem = document.querySelector("div#game-suggestions");
-    elem?.scroll(containerOptions);
-    return;
-  }
-
-  const viewSuggestion = (containerOptions?:ScrollIntoViewOptions) => {
-    const elem = document.querySelector("div#game-suggestions div[aria-selected=true]")
-    console.log(elem);
-    elem?.scrollIntoView(containerOptions);
+  const viewSuggestion = (suggestion: number) => {
+    const container = document.querySelector("div#game-suggestions");
+    container?.scroll({
+      top: (suggestion / filteredGames.length) * 150
+    });
   }
   const resetSuggestion = () => { focusedSuggestion = -1; }
 
