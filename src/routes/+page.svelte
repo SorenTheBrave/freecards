@@ -206,7 +206,6 @@
     const container = document.querySelector("div#game-suggestions");
     const elem = document.querySelector("div#game-suggestions div.search-result[aria-selected=true]");
     if(!elem) return;
-    console.log(suggestion *  elem.clientHeight);
     container?.scroll({
       top: suggestion * elem.clientHeight
     });
@@ -222,13 +221,12 @@
     if(search.replaceAll('#','').trim().length < 1) return allGames;
     const tagsInSearch = Array.from(searchParam.matchAll(/(#[a-zA-Z]+)/g), (m) => m[0]);
     if(tagsInSearch == null ||  tagsInSearch?.length == 0) {
+      const gameName=searchParam.replaceAll("#","");
       return allGames.filter((game) =>
-		    game.name.toLowerCase().includes(searchParam.toLowerCase())
+		    game.name.toLowerCase().includes(gameName.toLowerCase())
       )
     }
     const searchGameName = search.substring(0,search.indexOf('#')).trim().toLowerCase();
-    console.log("Term: ",searchGameName);
-    console.log("Tags: [",tagsInSearch.join(","),"]");
     return allGames.filter((game) =>
       game.name.toLowerCase().includes(searchGameName) &&
       tagsInSearch?.every((tag) => game.tags.some((gametag)=>gametag.startsWith(tag.substring(1))))
@@ -331,8 +329,7 @@
   }
 
   div.search-result[aria-selected=true]{
-    background-color: peachpuff;
-    scroll-padding-top: 5rem;
+    background-color: peachpuff !important;
   }
 
 	div.game-tags {
