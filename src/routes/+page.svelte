@@ -238,7 +238,7 @@
 	$: filteredGames = filterSearchResults(searchParam).sort((a,b) => a.name >= b.name ? 1 : -1);
 	$: filteredGameNames = filteredGames.map((game) => game.name);
 	$: displaysuggestions = filteredGames.length < allGames.length;
-	$: favoriteGames = allGames.filter((game) => game.favorited);
+	$: favoriteGames = allGames.filter((game) => game.favorited).slice(0,7);
 </script>
 
 <div id="single-column">
