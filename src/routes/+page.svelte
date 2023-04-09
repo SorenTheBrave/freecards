@@ -295,11 +295,13 @@
 					aria-describedby="{game.name}-description"
 					transition:fade={{ duration: 100 }}
 				>
-					<img alt="placeholder icon" src="/images/icon.png" class="display-game-icon" />
 					<div class="game-display-content">
 						<div class="result-header">
-							<Favorite checked={game.favorited} game={game.code} id="result-{game.code}" --scale="0.7"/>
-							<span class="game-display-header">{game.name}</span>
+              <img alt="placeholder icon" src="/images/icon.png" class="display-game-icon" />
+              <div class="game-display-title">
+                <Favorite checked={game.favorited} game={game.code} id="result-{game.code}" --scale="0.7"/>
+                <span class="game-display-header">{game.name}</span>
+              </div>
 						</div>
 						<div class="launch-buttons">
 							<button on:click={() => createGame(game.name)} class="create-btn">CREATE</button>
@@ -325,9 +327,9 @@
 
 <style lang="scss">
 
-  div#game-suggestions,
   div.search-result{
     overscroll-behavior-y: none;
+    width: clamp(18rem, 80%, 100%);
   }
 
   div.search-result[aria-selected=true]{
@@ -364,6 +366,11 @@
 	input {
 		text-align: center;
 	}
+
+  div.game-display-title{
+    display: flex;
+    flex-grow: 1;
+  }
 
 	@media screen and (max-width: 1100px) {
 		input#game-search {
@@ -438,6 +445,7 @@
 		grid-template-columns: 1fr 1fr 1fr;
 		justify-content: center;
 		gap: 0.45rem;
+    margin-top: auto;
 	}
 
 	div.launch-buttons button {
