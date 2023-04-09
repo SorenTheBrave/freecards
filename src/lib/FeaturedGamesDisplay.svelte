@@ -39,11 +39,11 @@
 			aria-describedby="{game.name}-description"
 			transition:slide
 		>
-			<div class="favorite">
-				<Favorite checked={game.favorited} game={game.code} id="featured-{index}" --scale="1.0"/>
-			</div>
 			<img alt="placeholder icon" src="/images/icon.png" class="display-game-icon" />
-			<h2 class="game-display-header">{game.name}</h2>
+      <div class="game-display-title">
+        <Favorite checked={game.favorited} game={game.code} id="featured-{index}" --scale="0.7"/>
+        <h2 class="game-display-header">{game.name}</h2>
+      </div>
 			<p class="description {game.name}-description">{game.description}</p>
 			<div class="game-display-footer">
 				<div class="launch-buttons">
@@ -67,6 +67,12 @@
 </div>
 
 <style lang="scss">
+
+  div.game-display-title {
+    display: flex;
+    justify-content: center;
+  }
+
 	img.display-game-icon {
 		max-width: 5rem;
 		max-height: 5rem;
@@ -184,41 +190,6 @@
         color: rgb(140, 180, 255);
       }
 		}
-
-		//   cursor: default;
-
-		//   &.tag-singleplayer{
-		//     color: white;
-		//     background-color: $tag-single;
-		//   }
-
-		//   &.tag-multiplayer{
-		//     color: white;
-		//     background-color: $tag-multi;
-		//   }
-
-		//   &.tag-trick{
-		//     color: white;
-		//     background-color: $tag-trick;
-		//   }
-
-		//   &.tag-solitaire{
-		//     background-color: $tag-solitaire;
-		//   }
-
-		//   &.tag-betting{
-		//     color: white;
-		//     background-color: $tag-betting;
-		//   }
-
-		//   &.tag-social{
-		//     background-color: $tag-social;
-		//   }
-
-		//   &.tag-deception{
-		//     background-color: $tag-deception;
-		//   }
-		// }
 
 		// /*
 		//   Transform rules to make cards look like they're fanned out as if

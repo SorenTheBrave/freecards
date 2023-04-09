@@ -22,10 +22,12 @@
 		type="checkbox"
 		id="favorited-{id}"
 		class="favorited"
+    role="switch"
+    aria-checked="{checked}"
 		{checked}
 		on:change={(_evt) => toggleFavorite(game)}
 	/>
-	<label for="favorited-{id}" />
+  <label for="favorited-{id}" class="sr-only"></label>
 </div>
 
 <style lang="scss">

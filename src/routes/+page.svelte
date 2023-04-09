@@ -219,18 +219,20 @@
 
   const filterSearchResults = (search: string): GameDisplay[] => {
     if(search.replaceAll('#','').trim().length < 1) return allGames;
-    const tagsInSearch = Array.from(searchParam.matchAll(/(#[a-zA-Z]+)/g), (m) => m[0]);
-    if(tagsInSearch == null ||  tagsInSearch?.length == 0) {
-      const gameName=searchParam.replaceAll("#","");
-      return allGames.filter((game) =>
-		    game.name.toLowerCase().includes(gameName.toLowerCase())
-      )
-    }
-    const searchGameName = search.substring(0,search.indexOf('#')).trim().toLowerCase();
-    return allGames.filter((game) =>
-      game.name.toLowerCase().includes(searchGameName) &&
-      tagsInSearch?.every((tag) => game.tags.some((gametag)=>gametag.startsWith(tag.substring(1))))
-    );
+    const allSearchTokens = search.split(' ');
+
+    return allGames.filter((game)=> {
+      return allSearchTokens.every((token) => {
+        token = token.toLowerCase();
+        if(token.startsWith("#")) {
+          return game.tags.some((tag) => tag.startsWith(token.substring(1)));
+        }
+        return (
+            game.tags.some((tag) => tag.startsWith(token)) ||
+            game.name.toLowerCase().includes(token)
+          );
+      });
+    });
   }
 
 	let favoriteGames: GameDisplay[] = [];
