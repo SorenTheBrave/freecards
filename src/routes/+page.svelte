@@ -297,7 +297,6 @@
 				>
 					<div class="game-display-content">
 						<div class="result-header">
-              <img alt="placeholder icon" src="/images/icon.png" class="display-game-icon" />
               <div class="game-display-title">
                 <Favorite checked={game.favorited} game={game.code} id="result-{game.code}" --scale="0.7"/>
                 <span class="game-display-header">{game.name}</span>
@@ -445,7 +444,7 @@
 		grid-template-columns: 1fr 1fr 1fr;
 		justify-content: center;
 		gap: 0.45rem;
-    margin-top: auto;
+    margin: 0 auto;
 	}
 
 	div.launch-buttons button {
@@ -481,13 +480,14 @@
 
 	div.game-display-card {
 		display: flex;
+    justify-content: center;
 		background-color: white;
 		border: 1px solid black;
 		border-radius: 10px;
 		margin: 0.25rem;
 		padding: 0.75rem;
 		max-height: 10rem;
-    max-width: 19.5rem;
+    width: 19.5rem;
 		box-shadow: 2px 2px 5px #222;
 
 		div.game-display-content {
@@ -496,9 +496,7 @@
 			justify-content: space-around;
 
 			div.result-header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        margin: 0 auto;
 
         span.game-display-header {
           font-size: 1.75rem;

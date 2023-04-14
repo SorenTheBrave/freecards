@@ -39,7 +39,6 @@
 			aria-describedby="{game.name}-description"
 			transition:slide
 		>
-			<img alt="placeholder icon" src="/images/icon.png" class="display-game-icon" />
       <div class="game-display-title">
         <Favorite checked={game.favorited} game={game.code} id="featured-{index}" --scale="0.7"/>
         <h2 class="game-display-header">{game.name}</h2>
@@ -155,7 +154,7 @@
 			}
 
 			h2.game-display-header {
-				font-size: 1.5rem;
+				font-size: 1.75rem;
 				font-weight: bolder;
 				text-align: center;
         margin: 0.5rem 0;
