@@ -240,7 +240,7 @@
 	$: filteredGames = filterSearchResults(searchParam).sort((a,b) => a.name >= b.name ? 1 : -1);
 	$: filteredGameNames = filteredGames.map((game) => game.name);
 	$: displaysuggestions = filteredGames.length < allGames.length;
-	$: favoriteGames = allGames.filter((game) => game.favorited).slice(0,7);
+	$: favoriteGames = allGames.filter((game) => game.favorited).sort((a,b) => a.name > b.name ? 1 : -1).slice(0,7);
 </script>
 
 <div id="single-column">
@@ -326,15 +326,6 @@
 
 <style lang="scss">
 
-  div.search-result{
-    overscroll-behavior-y: none;
-    width: clamp(18rem, 80%, 100%);
-  }
-
-  div.search-result[aria-selected=true]{
-    background-color: peachpuff !important;
-  }
-
 	div.game-tags {
 		max-width: 95%;
 		margin: 0.25rem auto;
@@ -411,6 +402,8 @@
 	}
 
 	div.search-result {
+    overscroll-behavior-y: none;
+    width: clamp(18rem, 80%, 100%);
 		height: 2rem;
 		background-color: white;
 		text-align: center;
@@ -421,6 +414,10 @@
 			background-color: blanchedalmond;
 			cursor: pointer;
 		}
+
+    &[aria-selected=true]{
+      background-color: peachpuff !important;
+    }
 	}
 
 	div#results {
@@ -430,13 +427,6 @@
 		margin: 3rem auto;
 		min-height: 30rem;
 		width: clamp(18rem, 90%, 100%);
-	}
-
-	img.display-game-icon {
-		max-width: 5rem;
-		max-height: 5rem;
-		margin: auto 0;
-		display: inherit;
 	}
 
 	div.launch-buttons {

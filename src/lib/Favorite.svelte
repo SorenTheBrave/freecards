@@ -14,23 +14,54 @@
 		} else {
 			localStorage.setItem('favorites', [...(allFavorites || []), game].join(';'));
 		}
+    _checked = !_checked;
+    console.log(game,": ",_checked?"check":"nope");
 	};
+  let _checked = checked;
 </script>
 
 <div class="favorite">
+  {#if _checked}
+    <img 
+      src="/images/star_filled.svg"
+      class="favorite-star"
+      alt="favorited"
+      on:click={(_evt) => toggleFavorite(game)}
+      on:keypress={(e)=>["Space","Enter"].includes(e.key) ? toggleFavorite(game) : false}
+    />
+  {:else}
+    <img 
+      src="/images/star_outline.svg"
+      class="favorite-star"
+      alt="not favorited"
+      on:click={(_evt) => toggleFavorite(game)}
+      on:keypress={(e)=>["Space","Enter"].includes(e.key) ? toggleFavorite(game) : false}
+    />
+  {/if}
 	<input
 		type="checkbox"
 		id="favorited-{id}"
-		class="favorited"
+		class="favorited sr-only"
     role="switch"
-    aria-checked="{checked}"
-		{checked}
+    aria-checked="{_checked}"
+		checked="{_checked}"
 		on:change={(_evt) => toggleFavorite(game)}
 	/>
   <label for="favorited-{id}" class="sr-only"></label>
 </div>
 
 <style lang="scss">
+  input,label.sr-only{
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+  }
+  div.favorite{
+    transform: scale(70%);
+  }
 	div.favorite input[type='checkbox'].favorited {
 		opacity: 0;
 		position: absolute;
@@ -42,13 +73,5 @@
 	}
 	div.favorite input[type='checkbox']:focus + label::before {
 		border-radius: 2px;
-	}
-	div.favorite input[type='checkbox'] + label::before {
-		content: url('/images/star_outline.svg');
-    transform: scale(var(--scale));
-	}
-	div.favorite input[type='checkbox']:checked + label::before {
-		content: url('/images/star_filled.svg');
-    transform: scale(var(--scale));
 	}
 </style>
