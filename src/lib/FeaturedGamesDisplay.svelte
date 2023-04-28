@@ -46,9 +46,9 @@
 			<p class="description {game.name}-description">{game.description}</p>
 			<div class="game-display-footer">
 				<div class="launch-buttons">
-					<button on:click={() => createGame(game.name)} class="create-btn">CREATE</button>
-					<button on:click={() => playGame(game.name)} class="play-btn">PLAY</button>
-					<button on:click={() => joinGame(game.name)} class="join-btn">JOIN</button>
+          <a href="/create/{game.code}?direction=forward" class="create-btn">CREATE</a>
+          <a href="/play/{game.code}?direction=forward" class="play-btn">PLAY</a>
+          <a href="/join/{game.code}?direction=forward" class="join-btn">JOIN</a>
 				</div>
 				<div class="game-tags">
 					{#each game.tags as tag}
@@ -91,14 +91,18 @@
 		margin-top: auto;
 	}
 
-	div.launch-buttons button {
+	div.launch-buttons a {
 		font-size: 1.25rem;
 		cursor: pointer;
 		border: 2px solid black;
 		border-radius: 5px;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    padding: 0 0.2rem;
 	}
 
-	button.create-btn {
+	a.create-btn {
 		background-color: hsl(183, 81%, 48%);
 
 		&:hover {
@@ -106,7 +110,7 @@
 		}
 	}
 
-	button.play-btn {
+	a.play-btn {
 		background-color: hsl(44, 98%, 62%);
 
 		&:hover {
@@ -114,7 +118,7 @@
 		}
 	}
 
-	button.join-btn {
+	a.join-btn {
 		background-color: hsl(345, 100%, 74%);
 
 		&:hover {

@@ -11,6 +11,7 @@
   body {
     background-color: green;
     margin: 0 auto;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
   
   nav a#home-link{
@@ -30,5 +31,14 @@
     right: 0.5rem;
     margin: auto 0.5rem;
     width: 2.5rem;
+  }
+
+  .sr-only{
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
   }
 }
