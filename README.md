@@ -18,16 +18,7 @@ npm run dev -- --open
 OR more simply just 
 `npm run dev`
 
-or you can cut npm out of the picture and run vite directly:
-
-```
-pnpm i --save-dev vite
-vite dev
-```
-
-You should probably install the 'Svelte for VS Code' extension if you
-are using that IDE and make sure VS Code is up to date. If you get weird
-errors (like on `<script>` tags), make sure the IDE itself is current.
+See `doc/dev-setup.md` for more information.
 
 ## Building
 

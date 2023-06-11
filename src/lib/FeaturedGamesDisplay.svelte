@@ -72,13 +72,6 @@
     justify-content: center;
   }
 
-	img.display-game-icon {
-		max-width: 5rem;
-		max-height: 5rem;
-		margin: 0 auto;
-		display: inherit;
-	}
-
 	p.description {
 		display: none;
 	}

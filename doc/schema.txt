@@ -1,0 +1,25 @@
+create game => server create lobby, redirect player to /lobby
+play game   => server create shell lobby, send game code
+join game   => redirect to /lobby with join params
+game options=> return adjustable parameters for a game
+open games  => return a list of all public lobbies for a game
+
+
+lobby: hash
+------universal------
+  name: string
+  turn: string [matches one of the names in players]
+  players: hash
+    name: string
+    hand: set
+  chat: list:hash
+    player: string
+    message: string
+    timestamp: string
+  settings: hash
+    [...]: string
+--------common--------
+  deck: set (The cards no player can see, SPOP to draw)
+  faceup: hash
+    visible: set
+    count: string

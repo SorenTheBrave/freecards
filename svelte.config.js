@@ -1,4 +1,5 @@
-import adapter from '@sveltejs/adapter-node';
+// import adapter from '@sveltejs/adapter-static';
+import adapter from 'svelte-adapter-deno';
 import preprocess from 'svelte-preprocess';
 
 const config = {

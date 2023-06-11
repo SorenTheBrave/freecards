@@ -26,7 +26,6 @@
 <style>
   div#layout-container {
     overflow-x: hidden;
-    height: 95vh;
   }
   div#transition-container {
     overflow-x: hidden;

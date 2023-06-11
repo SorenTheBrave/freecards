@@ -30,24 +30,24 @@
     </div>
     <div class="form-row">
       <div class="form-control">
-        <label for="player-name">Enable CPUs:</label>
-        <input id="player-name" type="checkbox" checked/>
+        <label for="enable-cpu">Enable CPU opponents:</label>
+        <input id="enable-cpu" type="checkbox" checked/>
       </div>
 
       <div class="form-control">
-        <label for="chat">Number of CPUs:</label>
-        <input id="chat" alt="Enable in-game chat room (text only)" type="number" min="1" max="50" checked/>
+        <label for="cpu-count">Number of CPU opponents:</label>
+        <input id="cpu-count" alt="Number of CPU" type="number" min="1" max="50" checked/>
       </div>
     </div>
 
     <div id="game-options" class="form-row">
       <div class="grow">
         <h2> Game specific options</h2>
-        <div id="open-games" >
-          <!-- {#each gameSpecificOptions as option}
+        <!-- <div id="game-options-list" >
+          {#each gameSpecificOptions as option}
             
-          {/each} -->
-        </div>
+          {/each} 
+        </div> -->
       </div>
       <div class="form-row control-btns">
         <a href="/"><button id="cancel">
@@ -132,10 +132,6 @@
 
     h2 {
       margin-bottom: 0.25rem;
-    }
-
-    hr {
-      width: 100%;
     }
 
 	}
