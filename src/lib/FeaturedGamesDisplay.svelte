@@ -130,13 +130,14 @@
 		div#games-display {
 			min-height: 30rem;
 			display: flex !important;
+		  margin: 1rem auto 0;
 		}
 	}
 
 	div#games-display {
 		display: none;
-		margin: 0 auto;
-		padding-top: 2rem;
+    position: relative;
+		margin: 1rem auto 0;
 		justify-content: center;
 		flex-wrap: wrap;
 

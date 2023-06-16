@@ -12,6 +12,14 @@
     background-color: green;
     margin: 0 auto;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  nav {
+    height: 3rem;
   }
   
   nav a#home-link{

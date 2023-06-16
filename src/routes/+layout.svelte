@@ -8,9 +8,6 @@
     out: data.direction == "forward" ? -500 : 500,
   }
 </script>
-<nav>
-
-</nav>
 <div id="layout-container">
 {#key data.url}
   <div
@@ -20,18 +17,31 @@
     >
     <slot></slot>
   </div>
+  {#if data.url == "/"}
+    <footer>
+      Concept and web development by Alex Hansen. Site design by Emi Kay. FreeCards does not and never will charge you, track you, or ask for your personal information.
+    </footer>
+  {/if}
 {/key}
 </div>
 
 <style>
   div#layout-container {
     overflow-x: hidden;
-    height: 95vh;
+    min-height: calc(100vh - 3rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   div#transition-container {
     overflow-x: hidden;
   }
-  nav {
-    height: 5vh;
+  footer {
+    background-color: #222;
+    color: #f7f7ff;
+    font-size: 1rem;
+    max-height: 2rem;
+    padding: 0.5rem;
+    text-align: center;
   }
 </style>

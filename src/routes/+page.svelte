@@ -262,9 +262,9 @@
 		{#if displaysuggestions}
 			<div id="game-suggestions" role="listbox">
 				{#each filteredGameNames as suggestion, index}
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
 						on:click={() => (searchParam = suggestion)}
+            on:keydown={(e)=> {if(["Space","Enter"].includes(e.key)) searchParam = suggestion;}}
 						id="suggestion-{suggestion}"
 						role="option"
 						aria-selected={index == focusedSuggestion}
@@ -383,10 +383,6 @@
 	section#browse {
 		display: grid;
 		margin: 2rem 0;
-	}
-
-	div#single-column {
-		margin: -2.5rem auto 0;
 	}
 
 	div.search-result {
